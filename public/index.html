@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+    <div class='container'>
+        <nav class='navbar navbar-inverse navbar-fixed-top'>
+            <div class='container'>
+                <div class='navbar-header'>
+                    <a class='navbar-brand'>URL Shortner and Tracking Application</a>
+                </div>
+            </div>
+        </nav>
+        <div style="height:80px;"></div> 
+        <form class="form-horizontal" role="form" id="linkForm" action="">
+        
+        <div class="form-group">
+          <label class="control-label col-sm-1" for="pwd">Link:</label>
+          <div class="col-sm-10">          
+            <input type="text" class="form-control" id="link" placeholder="Enter Link Here">
+          </div>
+        </div>
+        <div class="form-group">        
+          <div class="col-sm-offset-1 col-sm-10">
+            <button type="submit" class="btn btn-default">Submit</button>
+          </div>
+        </div>
+      </form>
+
+
+        <div id="info"></div>
+        <!--pre id="result">
+        <pre-->
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+<!--reference http://caldwell.github.io/renderjson/ -->
+
+<script src="js/client.js" ></script>
+</html>

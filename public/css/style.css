@@ -1,0 +1,37 @@
+#buttons_area {
+    margin-top: 70px;
+}
+#result {
+    margin-top: 20px;
+}
+.renderjson a {
+    text-decoration: none;
+}
+.renderjson .disclosure {
+    color: crimson;
+    font-size: 150%;
+}
+.renderjson .syntax {
+    color: grey;
+}
+.renderjson .string {
+    color: darkred;
+}
+.renderjson .number {
+    color: darkcyan;
+}
+.renderjson .boolean {
+    color: blueviolet;
+}
+.renderjson .key {
+    color: darkblue;
+}
+.renderjson .keyword {
+    color: blue;
+}
+.renderjson .object.syntax {
+    color: lightseagreen;
+}
+.renderjson .array.syntax {
+    color: orange;
+}
