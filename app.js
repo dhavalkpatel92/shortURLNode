@@ -1,21 +1,12 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var redis = require('redis');
-var url=require('url');
 var client = redis.createClient();
 var bases=require('bases');
+var url=require('url');
 var app = express();
-
 app.use(express.static('public'));
-//var resultArray;
-//var obj='{}';
-
 var num=479890;
-//var gameArray = ["rock", "paper", "scissors", "lizard", "spock"];
-//var resultJSON = JSON.parse(resultArray);
-//obj["479890"]="http://google.com";
-//resultArray.push(obj);
-//console.log(resultArray);
 app.use(bodyParser.urlencoded({
     extended: false
 }));
@@ -26,10 +17,8 @@ client.on('error', function(error)
 });
 
 client.exists('counter', function(err, reply) {
-	 if (reply != 1) {
-		{
-			client.set('counter', 479890);
-		}
+	if (reply != 1) {
+		client.set('counter', 479890);
 	}
 });
 
@@ -38,27 +27,42 @@ client.exists('counter', function(err, reply) {
 
 app.post('/request', function(req,res) {
 	var link=req.body.link;
-	
+	var parseurl=url.parse(link).pathname.slice(1);
+	var hostname=url.parse(link).hostname;
+	if(hostname=="localhost")
+	{
+		client.exists(parseurl, function(err, reply) {
+			if (reply === 1) {
+				client.get(parseurl, function(err, reply) {
+    				//res.send("Already Created <br/> http://localhost:3000/"+reply);
+    				res.send(reply);
+    			});
+			}
+			else
+			{
+				res.send("URL not found");
+			}
+		});
+
+	}
+	else
+	{
+	//console.log("parse_url"+parseurl);     
+	//console.log("hostname"+url.parse(link).hostname);
 	var counter;
-	parseurl=url.parse(link).pathname;
-	console.log("parse url "+parseurl);
-	console.log(parseurl.slice(1));
-	
+
 	client.exists(link, function(err, reply) {
-
-
     if (reply === 1) {
     	client.get(link, function(err, reply) {
     		res.send("Already Created <br/> http://localhost:3000/"+reply);
     		//res.send(reply);
     	});
-    }
-    else {
+    } else {
         //console.log('doesn\'t exist');
         client.get('counter', function(err, reply) {
 		counter=reply;
 	var shorturl=bases.toBase36(counter);
-	console.log(shorturl);
+	//console.log(shorturl);
 	client.set(link,shorturl);
 	client.set(shorturl,link);
 	client.set('counter', Number(counter)+1);
@@ -68,7 +72,7 @@ app.post('/request', function(req,res) {
 
     }
 	});
-	
+	}
 	/*
 	client.get(link, function(err, reply) {
 
@@ -81,5 +85,19 @@ app.post('/request', function(req,res) {
 	});
 	*/
 });
-
+app.route("/:url").all(function(req, res) {
+	 var url = req.params.url;
+	 //console.log(url);
+	 client.exists(url, function(err, reply) {
+    if (reply === 1) {
+    	client.get(url, function(err, reply) {
+    		res.status(301);
+            res.set("Location", reply);
+            res.send();
+    	});
+    } else {
+    	res.send("URL not found");
+    }
+});
+});
 app.listen(3000);
