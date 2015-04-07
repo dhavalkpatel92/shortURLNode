@@ -1,16 +1,22 @@
-/*
+
 $(document).ready(function() {
   $.ajax({
-      url: '/result',
+      url: '/result/urls',
       type: 'get',
       dataType: 'json',
       contentType: "application/json; charset=utf-8",
       success: function(data) {
-          $("#result").html(renderjson.set_show_by_default(true)(data));
+         $("#result").html("<h1>Top 10 URLs</h1>");
+        var arrayLength = data.length;
+        for(var i=0;i<arrayLength;i++)
+        {
+            $("#result").append("<a href='http://localhost:3000/"+data[i]+"'>http://localhost:3000/"+data[i]+"</a><br/>");
+        }
+          //$("#result").html(renderjson.set_show_by_default(true)(data));
+        
       }
   });
 });
-*/
 $("#linkForm").submit(function(event) {
   event.preventDefault();
   var link = $("#link").val();
@@ -32,3 +38,5 @@ $("#linkForm").submit(function(event) {
         }
       });
 });
+
+//$("#")
